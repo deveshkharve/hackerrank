@@ -1,4 +1,5 @@
 """
+solution
 https://www.hackerrank.com/challenges/crush/problem
 difficulty: Hard, section: data structues
 
