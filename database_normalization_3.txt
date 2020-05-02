@@ -1,0 +1,33 @@
+A database used by a college’s application stores the relationship between students and the courses they are enrolled in. We have information for each STUDENT (such as name, date of birth, date of enrollment, student-id) and COURSE (course code, instructor, etc.). In real life, a student takes several courses simultaneously while a subject is studied by several students. We need to capture this many-to-many relationship in our database. From the above information, what is the minimum number of tables required to structure this database in accordance with the rules of 2NF normalization?
+
+Ans: 3
+
+Explaination:
+We need the schema to be in 2nd Normalized Form, that is 2NF.
+A table is said to be in 2NF when there is no transitive dependecy. Lets understand this in detail:
+
+We have two tables, STUDENT and COURSE as following:
+  STUDENT(student_id, name, date of birth, date of enrollment)
+  COURSE(course_id, name, instructor_id, instructor_name, etc.)
+  
+If we try to fit data with only one table, then we will end up storing multiple values for the courses in the same course coulmns, hence invalidating 1NF. 
+  Example: 
+      STUDENT_COURSE(student_id, name, date of birth, enrollment, course_code, instructor, etc.)
+                   [ 1,  John Doe, 01-01-1999, 01-01-2010, (C1,C2,C6,) (I1, I2, I4), ...]
+  the course_code, instructor and subsequent columns will have multiple values.
+  
+  If we try with two tables, then we will end up having transitive dependency, ane hence invalidating 2NF. 
+  Example:
+      STUDENT(student_id, name, date of birth, date of enrollment)
+      STUDENT_COURSE(student_id, course_id, name, instructor_id, instructor_name, etc.)
+      
+  here in STUDENT_COURSE table we have transitive dependency. the candidate key is (student_id, course_id).
+  and the non prime attributes i.e. (name, instructor_id, instructor_name, etc.) depends on course_id. And course_id inturn
+  depends on the prime_attributes (student_id, course_id). Hence this is in 1NF but not 2NF.
+  
+  with 3 tables as 
+    STUDENT(student_id, name, date of birth, date of enrollment)
+    COURSE(course_id, name, instructor_id, instructor_name, etc.)
+    STUDENT_COURSE(student_id, course_id)
+    
+    we remove the tranisitive dependency (partial depenedncy of non-prime attributes). And thus this is the answer.
